@@ -1,0 +1,25 @@
+<h1>Listado de productos</h1>
+	<div>
+	{{#each payload}}
+		<div>
+			<p><strong>{{this.title}}</strong> (id={{this._id}}) <a href="/products/{{this._id}}">(Más información)</a></p>
+		</div>
+		<div>
+			<form action="/api/carts/67be5b5c2e68e87fb8d8bd6b/products/{{this._id}}?_method=PUT" method="post">
+				<label for="quantity">Cantidad:</label> <!-- carrito harcodeado; me faltó hacer un selector de todos los carros -->
+				<input type="number" id="quantity" name="quantity" required step="1" min="1" max="{{this.stock}}"><br>
+				<input type="hidden" name="_method" value="PUT">
+				<button type="submit">Agregar al carrito</button>
+			</form>
+		</div>
+	{{/each}}
+	</div>
+<p>Fin de listado</p>
+
+{{#if hasPrevPage}}
+	<p>Link a página previa: <a href="/products/{{prevLink}}">Página {{prevPage}}</a></p>
+{{/if}}
+<p>Página actual: {{page}}</p>
+{{#if hasNextPage}}
+	<p>Link a página previa: <a href="/products/{{nextLink}}">Página {{nextPage}}</a></p>
+{{/if}}

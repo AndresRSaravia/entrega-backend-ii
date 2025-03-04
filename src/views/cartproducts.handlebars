@@ -1,0 +1,12 @@
+<h1>Listado del carrito (id={{cid}})</h1>
+	<div>
+	{{#each prodpop}}
+		<div>
+			<p><strong>{{this.title}}</strong> (id={{this._id}}): {{this.description}}</p>
+			<ul><strong>Código, status y categoría</strong>: {{this.code}}, {{this.status}} y {{this.category}}</ul>
+			<ul><strong>Precio</strong>: ${{this.price}}</ul>
+			<ul><strong>Cantidad a comprar</strong>: {{this.quantity}} de {{this.stock}} unidades</ul>
+		</div>
+	{{/each}}
+	</div>
+<p>Fin de listado</p>

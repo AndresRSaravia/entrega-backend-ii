@@ -1,0 +1,12 @@
+<h1>Producto con id={{_id}}</h1>
+	<div>
+			<p><strong>{{title}}</strong>: {{description}}</p>
+			<ul><strong>Código, status y categoría</strong>: {{code}}, {{status}} y {{category}}</ul>
+			<ul><strong>Precio y stock</strong>: ${{price}} y {{stock}} unidades</ul>
+			<form action="/api/carts/67be5b5c2e68e87fb8d8bd6b/products/{{this._id}}?_method=PUT" method="post">
+				<label for="quantity">Cantidad:</label> <!-- carrito harcodeado; me faltó hacer un selector de todos los carros -->
+				<input type="number" id="quantity" name="quantity" required step="1" min="1" max="{{stock}}"><br>
+				<input type="hidden" name="_method" value="PUT">
+				<button type="submit">Agregar al carrito</button>
+			</form>
+ 	</div>
