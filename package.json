@@ -8,7 +8,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -25,5 +24,14 @@
     "serialize-javascript": "^6.0.2",
     "socket.io": "^4.8.1"
   },
-  "type": "module"
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndresRSaravia/entrega-backend-ii.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AndresRSaravia/entrega-backend-ii/issues"
+  },
+  "homepage": "https://github.com/AndresRSaravia/entrega-backend-ii#readme",
+  "description": ""
 }
