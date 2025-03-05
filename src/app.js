@@ -1,13 +1,17 @@
 import express from 'express';
+import passport from 'passport';
 import mongoose from 'mongoose';
 import dotenv from "dotenv";
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
+import initializePassport from '../config/passport.config.js';
 import __dirname from './utils.js';
 import cartRouter from './routes/carts.router.js';
 import productRouter from './routes/products.router.js';
+import sessionsRouter from './routes/sessions.router.js';
 import viewsRouter from './routes/views.router.js';
 import path from 'path';
+import cookieParser from 'cookie-parser'
 
 // Inicialización server
 const app = express();
@@ -32,6 +36,13 @@ mongoose.connect(URLMONGO)
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// Configuración del passport
+app.use(passport.initialize());
+initializePassport();
+
+// Configuración de cookies
+app.use(cookieParser());
+
 // Configuración del motor de plantillas handlebars
 app.engine('handlebars',handlebars.engine())
 app.set('views',path.join(__dirname,'/views'))
@@ -47,6 +58,7 @@ app.use(methodOverride('_method'));
 app.use('/',viewsRouter);
 app.use('/api/carts',cartRouter);
 app.use('/api/products',productRouter);
+app.use('/api/sessions',sessionsRouter);
 
 // Inicialización del servidor
 app.listen(PORT, () => {
