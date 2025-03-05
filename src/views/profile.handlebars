@@ -1,1 +1,10 @@
-<h1>Bienvenido, {{user}}</h1>
+<h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
+
+<form action="/api/sessions/logout" method="POST">
+	<button type="submit">Terminar sesión</button>
+</form>
+
+<form action="/cartproducts/{{user.cart}}" method="GET">
+	<button type="submit">Ir al carrito</button>
+</form>
+
