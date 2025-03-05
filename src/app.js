@@ -4,11 +4,9 @@ import dotenv from "dotenv";
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
 import __dirname from './utils.js';
-import indexRouter from './routes/index.router.js';
 import cartRouter from './routes/carts.router.js';
 import productRouter from './routes/products.router.js';
-import listProductsRouter from './routes/listproducts.router.js';
-import listCartProductsRouter from './routes/listcartproducts.router.js';
+import viewsRouter from './routes/views.router.js';
 import path from 'path';
 
 // Inicialización server
@@ -46,11 +44,9 @@ app.use(express.static(path.join(__dirname,'/public')))
 app.use(methodOverride('_method'));
 
 // Configuración para routers
-app.use('/',indexRouter);
+app.use('/',viewsRouter);
 app.use('/api/carts',cartRouter);
 app.use('/api/products',productRouter);
-app.use('/products',listProductsRouter);
-app.use('/cartproducts',listCartProductsRouter);
 
 // Inicialización del servidor
 app.listen(PORT, () => {
