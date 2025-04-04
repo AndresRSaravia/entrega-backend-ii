@@ -1,14 +1,17 @@
 import {Router} from 'express';
-import userModel from '../models/user.model.js';
-import cartModel from '../models/cart.model.js';
 import jwt from 'jsonwebtoken'
 import passport from 'passport';
-import bcrypt from 'bcrypt';
-
-const isValidPassword = ((password, user) => bcrypt.compareSync(password, user.password));
-const createHash = ((password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10)));
 const router = Router();
 
+// Controlador de usuario
+import userController from '../controllers/user.controller.js'
+
+router.post('/register', userController.register);
+router.post('/login',  userController.login);
+router.get('/current', passport.authenticate('jwt', {session: false}), userController.current);
+router.post('/logout', userController.logout);
+
+/*
 router.post('/login', async (req, res) => {
 	try {
 		const {email, password} = req.body;
@@ -73,5 +76,5 @@ router.get('/admin', passport.authenticate('current', {session: false}), (req, r
 	}
 	res.render('admin')
 });
-
+*/
 export default router;
