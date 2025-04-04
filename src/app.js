@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from "dotenv";
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
-import initializePassport from '../config/passport.config.js';
+import initializePassport from './config/passport.config.js';
 import __dirname from './utils.js';
 import cartRouter from './routes/carts.router.js';
 import productRouter from './routes/products.router.js';
