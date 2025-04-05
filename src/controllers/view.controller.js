@@ -79,6 +79,8 @@ class ViewController {
 				let foundProduct = await productService.getProductById(pid);
 				foundProduct = JSON.parse(JSON.stringify(foundProduct));
 				foundProduct.quantity = product.quantity;
+				foundProduct.notenough = foundProduct.quantity > foundProduct.stock;
+				console.log(foundProduct.notenough)
 				prodpop.push(foundProduct)
 			}
 			//console.log(prodpop[1].quantity)

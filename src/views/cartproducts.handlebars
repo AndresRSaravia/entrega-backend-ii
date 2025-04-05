@@ -5,7 +5,11 @@
 			<p><strong>{{this.title}}</strong> (id={{this._id}}): {{this.description}}</p>
 			<ul><strong>Código, status y categoría</strong>: {{this.code}}, {{this.status}} y {{this.category}}</ul>
 			<ul><strong>Precio</strong>: ${{this.price}}</ul>
-			<ul><strong>Cantidad a comprar</strong>: {{this.quantity}} de {{this.stock}} unidades</ul>
+			{{#if this.notenough}}
+			<ul style="color:red"><strong>Cantidad a comprar</strong>: {{this.quantity}} de {{this.stock}} unidades</ul>
+			{{else}}
+			<ul style="color:green"><strong>Cantidad a comprar</strong>: {{this.quantity}} de {{this.stock}} unidades</ul>
+			{{/if}}
 		</div>
 	{{/each}}
 	</div>
