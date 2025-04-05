@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import UserDTO from '../dto/user.dto.js';
 
 // Servicio de usuario
 import userService from '../services/user.service.js';
@@ -8,7 +9,10 @@ class UserController {
 		const {first_name, last_name, age, email, password} = req.body;
 		try {
 			const newUser = await userService.registerUser({first_name, last_name, age, email, password})
-			const token = jwt.sign({email: newUser.email, role: newUser.role}, 'coderhouse', {expiresIn: '1h'});
+			const token = jwt.sign({
+				email: newUser.email,
+				role: newUser.role
+			}, 'coderhouse', {expiresIn: '1h'});
 			res.cookie('coderCookieToken', token, {httpOnly: true, maxAge: 3600000});
 			res.redirect('/api/sessions/current');
 		} catch (error) {
@@ -32,8 +36,9 @@ class UserController {
 
 	async current(req, res) {
 		if (req.user) {
-			const user = req.user
-			res.render('profile', user)
+			const user = req.user;
+			const userDTO = new UserDTO(user)
+			res.render('profile', {user: userDTO})
 		} else {
 			res.send("No autorizado.")
 		}

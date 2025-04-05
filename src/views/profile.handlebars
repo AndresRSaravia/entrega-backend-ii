@@ -1,5 +1,7 @@
 <h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
 
+Tu edad es {{user.age ? user.age : "[oculto]"}}.
+
 <form action="/api/sessions/logout" method="POST">
 	<button type="submit">Terminar sesión</button>
 </form>
