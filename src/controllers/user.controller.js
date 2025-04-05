@@ -1,10 +1,9 @@
-import jwt from 'jsonwebtoken'
-import passport from 'passport';
+import jwt from 'jsonwebtoken';
 
 // Servicio de usuario
-import userService from '../services/user.services.js';
+import userService from '../services/user.service.js';
 
-class UserConstroller {
+class UserController {
 	async register(req, res) {
 		const {first_name, last_name, age, email, password} = req.body;
 		try {
@@ -14,20 +13,20 @@ class UserConstroller {
 			res.redirect('/api/sessions/current');
 		} catch (error) {
 			console.error('Error al registrar usuario', error);
-			res.status(500).send({error: 'Error interno del servidor'});
+			res.status(500).send({status: 'error', error: 'Error interno del servidor'});
 		}
 	}
 
 	async login(req, res) {
 		const {email, password} = req.body;
 		try {
-			const user = await userService.loginUser(email, password)
+			const user = await userService.loginUser(email, password);
 			const token = jwt.sign({email: user.email, role: user.role}, 'coderhouse', {expiresIn: '1h'});
 			res.cookie('coderCookieToken', token, {httpOnly: true, maxAge: 3600000});
 			res.redirect('/api/sessions/current');
 		} catch (error) {
 			console.error('Error al hacer login', error);
-			res.status(500).send({error: 'Error interno del servidor'});
+			res.status(500).send({status: 'error', error: 'Error interno del servidor'});
 		}
 	}
 
@@ -46,4 +45,4 @@ class UserConstroller {
 	}
 }
 
-export default new UserConstroller();
+export default new UserController();

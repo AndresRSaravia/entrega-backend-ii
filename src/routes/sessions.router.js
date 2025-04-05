@@ -1,5 +1,4 @@
 import {Router} from 'express';
-import jwt from 'jsonwebtoken'
 import passport from 'passport';
 const router = Router();
 
@@ -7,9 +6,15 @@ const router = Router();
 import userController from '../controllers/user.controller.js'
 
 router.post('/register', userController.register);
-router.post('/login',  userController.login);
+router.post('/login', userController.login);
 router.get('/current', passport.authenticate('jwt', {session: false}), userController.current);
 router.post('/logout', userController.logout);
+router.get('/admin', passport.authenticate('current', {session: false}), (req, res) => {
+	if(req.user.role !== 'admin') {
+		return res.status(403).send('Acceso Denegado')
+	}
+	res.render('admin')
+});
 
 /*
 router.post('/login', async (req, res) => {
@@ -70,11 +75,6 @@ router.get('/current', passport.authenticate('current', {session: false}), async
 	}
 });
 
-router.get('/admin', passport.authenticate('current', {session: false}), (req, res) => {
-	if(req.user.role !== 'admin') {
-		return res.status(403).send('Acceso Denegado')
-	}
-	res.render('admin')
-});
+
 */
 export default router;
