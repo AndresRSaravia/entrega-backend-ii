@@ -4,7 +4,6 @@ import productService from '../services/product.service.js';
 
 class ViewController {
 	async indexe(req,res) {
-		console.log("as")
 		res.render('index', {})
 	}
 
@@ -36,7 +35,11 @@ class ViewController {
 			if (hasNextPage) {
 				nextLink = `?limit=${reslimit}&page=${respage+1}&query=${JSON.stringify(resquery).replace(/"/g, "'")}&sort=${ressort}`
 			}
-			return res.render('products', {
+			let handlebar = 'products'
+			if (req.user.role === 'admin') {
+				handlebar += 'admin';
+			}
+			return res.render(handlebar, {
 				cart: req.user.cart,
 				status: 'success',
 				payload: (infoPaginate.docs).map( product => product.toObject()),
@@ -64,7 +67,11 @@ class ViewController {
 			foundProduct.cart = req.user.cart;
 			console.log(req.user.cart)
 			console.log(foundProduct)
-			return res.render('showproduct', foundProduct);
+			let handlebar = 'showproduct'
+			if (req.user.role === 'admin') {
+				handlebar += 'admin';
+			}
+			return res.render(handlebar, foundProduct);
 		} catch (error){
 			console.log(error)
 			return res.status(500).send({status: 'error', error: 'Error al obtener el producto.'});

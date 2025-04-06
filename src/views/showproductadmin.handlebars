@@ -1,0 +1,31 @@
+<h1>Producto con id={{_id}} {{cart}}</h1>
+<div>
+	<p><strong>{{title}}</strong>: {{description}}</p>
+	<ul><strong>Código, status y categoría</strong>: {{code}}, {{status}} y {{category}}</ul>
+	<ul><strong>Precio y stock</strong>: ${{price}} y {{stock}} unidades</ul>
+	<form action="/api/products/{{this._id}}?_method=DELETE" method="POST">
+		<input type="hidden" name="_method" value="DELETE">
+		<button type="submit">Borrar producto</button>
+	</form>
+</div>
+
+<h2>Edición de producto</h2>
+<form action="/api/products?_method=PUT" method="POST" enctype="multipart/form-data">
+	<label for="title">Nombre:</label>
+	<input type="text" id="title" name="title" required><br>
+	<label for="description">Descripción:</label>
+	<input type="textarea" id="description" name="description" required><br>
+	<label for="code">Código:</label>
+	<input type="text" id="code" name="code" required><br>
+	<label for="price">Precio:</label>
+	<input type="number" id="price" name="price" step="1" min="0" value={{price}} required><br>
+	<label for="status">status:</label>
+	<input type="number" id="status" name="status" step="1" min="0" max="1" required><br>
+	<label for="stock">Stock:</label>
+	<input type="number" id="stock" name="stock" value={{stock}} required><br>
+	<label for="category">Categoría:</label>
+	<input type="text" id="category" name="category" required><br>
+	<label for="thumbnails">Imagen:</label>
+	<input type="file" id="thumbnails" name="thumbnails" accept="image/png, image/jpeg" required/><br>
+	<button type="submit">Registrar</button>
+</form>

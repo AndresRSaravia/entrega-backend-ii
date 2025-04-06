@@ -2,24 +2,37 @@
 	<div>
 	{{#each payload}}
 		<div>
-			<p><strong>{{this.title}}</strong> (id={{this._id}}) <a href="/products/{{this._id}}">(Más información)</a></p>
-		</div>
-		<div>
-			<form action="/api/carts/67be5b5c2e68e87fb8d8bd6b/products/{{this._id}}?_method=PUT" method="post">
-				<label for="quantity">Cantidad:</label> <!-- carrito harcodeado; me faltó hacer un selector de todos los carros -->
-				<input type="number" id="quantity" name="quantity" required step="1" min="1" max="{{this.stock}}"><br>
-				<input type="hidden" name="_method" value="PUT">
-				<button type="submit">Agregar al carrito</button>
-			</form>
+			<p><strong>{{this.title}}</strong> (id={{this._id}}) <a href="/productsadmin/{{this._id}}">(Más información)</a></p>
 		</div>
 	{{/each}}
 	</div>
 <p>Fin de listado</p>
 
 {{#if hasPrevPage}}
-	<p>Link a página previa: <a href="/products/{{prevLink}}">Página {{prevPage}}</a></p>
+	<p>Link a página previa: <a href="/productsadmin/{{prevLink}}">Página {{prevPage}}</a></p>
 {{/if}}
 <p>Página actual: {{page}}</p>
 {{#if hasNextPage}}
-	<p>Link a página previa: <a href="/products/{{nextLink}}">Página {{nextPage}}</a></p>
+	<p>Link a página previa: <a href="/productsadmin/{{nextLink}}">Página {{nextPage}}</a></p>
 {{/if}}
+
+<h2>Registro de producto</h2>
+<form action="/api/products?_method=POST" method="POST" enctype="multipart/form-data">
+	<label for="title">Nombre:</label>
+	<input type="text" id="title" name="title" required><br>
+	<label for="description">Descripción:</label>
+	<input type="textarea" id="description" name="description" required><br>
+	<label for="code">Código:</label>
+	<input type="text" id="code" name="code" required><br>
+	<label for="price">Precio:</label>
+	<input type="number" id="price" name="price" step="1" min="0" required><br>
+	<label for="status">status:</label>
+	<input type="number" id="status" name="status" step="1" min="0" max="1" required><br>
+	<label for="stock">Stock:</label>
+	<input type="number" id="stock" name="stock" required><br>
+	<label for="category">Categoría:</label>
+	<input type="text" id="category" name="category" required><br>
+	<label for="thumbnails">Imagen:</label>
+	<input type="file" id="thumbnails" name="thumbnails" accept="image/png, image/jpeg" /><br>
+	<button type="submit">Registrar</button>
+</form>
