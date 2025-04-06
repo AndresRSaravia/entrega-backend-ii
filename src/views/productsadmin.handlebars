@@ -5,7 +5,7 @@
 			<p><strong>{{this.title}}</strong> (id={{this._id}}) <a href="/products/{{this._id}}">(Más información)</a></p>
 		</div>
 		<div>
-			<form action="/api/carts/{{cart}}/products/{{this._id}}?_method=PUT" method="post">
+			<form action="/api/carts/67be5b5c2e68e87fb8d8bd6b/products/{{this._id}}?_method=PUT" method="post">
 				<label for="quantity">Cantidad:</label> <!-- carrito harcodeado; me faltó hacer un selector de todos los carros -->
 				<input type="number" id="quantity" name="quantity" required step="1" min="1" max="{{this.stock}}"><br>
 				<input type="hidden" name="_method" value="PUT">

@@ -16,8 +16,10 @@ class ViewController {
 		res.render('login', {});
 	}
 
-	async products (req,res) {
+	async products(req,res) {
 		console.log('Pedido de listado de productos.');
+		console.log(req.user);
+		console.log(req.user.cart);
 		const {limit, page, query, sort} = req.query
 		try{
 			const [reslimit, respage, resquery, ressort, infoPaginate] = await productService.listProduct(limit, page, query, sort);
@@ -35,6 +37,7 @@ class ViewController {
 				nextLink = `?limit=${reslimit}&page=${respage+1}&query=${JSON.stringify(resquery).replace(/"/g, "'")}&sort=${ressort}`
 			}
 			return res.render('products', {
+				cart: req.user.cart,
 				status: 'success',
 				payload: (infoPaginate.docs).map( product => product.toObject()),
 				totalPages: totalPages,
@@ -56,7 +59,10 @@ class ViewController {
 		const pid = req.params.pid
 		console.log('Id del producto a buscar:', pid);
 		try{
-			const foundProduct = await productService.getProductById(pid);
+			let foundProduct = await productService.getProductById(pid);
+			foundProduct = JSON.parse(JSON.stringify(foundProduct));
+			foundProduct.cart = req.user.cart;
+			console.log(req.user.cart)
 			console.log(foundProduct)
 			return res.render('showproduct', foundProduct);
 		} catch (error){
