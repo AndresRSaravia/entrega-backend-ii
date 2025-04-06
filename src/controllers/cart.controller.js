@@ -160,7 +160,7 @@ class CartController {
 				ticketService.createTicket({
 					code: generateUniqueCode(),
 					purchasedate: String(new Date()),
-					purchaser: "AlanTuring@email.com", // hardcodeado dado que tuve problemas con jwt
+					purchaser: req.user.email, // hardcodeado dado que tuve problemas con jwt
 					total: total,
 				})
 			}
