@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 
 const userCollection = "Usuarios";
 
-//Definirmos el esquema para el estudiante
 const userSchema = new Schema({
 	first_name: {type: String, required: true},
 	last_name: {type: String, required: true},
@@ -18,7 +17,7 @@ const userSchema = new Schema({
 		enum: ['admin','user'],
 		default: 'user',
 		required: true
-	}
+	},
 });
 
 userSchema.plugin(mongoosePaginate);

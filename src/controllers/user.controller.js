@@ -25,7 +25,14 @@ class UserController {
 		const {email, password} = req.body;
 		try {
 			const user = await userService.loginUser(email, password);
-			const token = jwt.sign({email: user.email, role: user.role}, 'coderhouse', {expiresIn: '1h'});
+			const token = jwt.sign({
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email: user.email,
+				role: user.role,
+				age: user.age,
+				cart: user.cart
+			}, 'coderhouse', {expiresIn: '1h'});
 			res.cookie('coderCookieToken', token, {httpOnly: true, maxAge: 3600000});
 			res.redirect('/api/sessions/current');
 		} catch (error) {
@@ -37,10 +44,12 @@ class UserController {
 	async current(req, res) {
 		if (req.user) {
 			const user = req.user;
-			const userDTO = new UserDTO(user)
-			res.render('profile', {user: userDTO})
+			console.log(user);
+			const userDTO = new UserDTO(user);
+			console.log(userDTO);
+			res.render('profile', {user: userDTO});
 		} else {
-			res.send("No autorizado.")
+			return res.status(403).send('Acceso Denegado');
 		}
 	}
 

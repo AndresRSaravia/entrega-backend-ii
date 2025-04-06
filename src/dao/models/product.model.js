@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 
 const productCollection = "Productos";
 
-//Definirmos el esquema para el estudiante
 const productSchema = new Schema({
 	title: {type: String, required: true},
 	description: {type: String, required: true},
