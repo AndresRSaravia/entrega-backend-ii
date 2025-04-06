@@ -10,8 +10,12 @@ class UserController {
 		try {
 			const newUser = await userService.registerUser({first_name, last_name, age, email, password})
 			const token = jwt.sign({
-				email: newUser.email,
-				role: newUser.role
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email: user.email,
+				role: user.role,
+				age: user.age,
+				cart: user.cart
 			}, 'coderhouse', {expiresIn: '1h'});
 			res.cookie('coderCookieToken', token, {httpOnly: true, maxAge: 3600000});
 			res.redirect('/api/sessions/current');
