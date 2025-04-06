@@ -9,7 +9,7 @@ router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.get('/current', passport.authenticate('jwt', {session: false}), userController.current);
 router.post('/logout', userController.logout);
-router.get('/admin', passport.authenticate('current', {session: false}), (req, res) => {
+router.get('/admin', passport.authenticate('jwt', {session: false}), (req, res) => {
 	if(req.user.role !== 'admin') {
 		return res.status(403).send('Acceso Denegado')
 	}
