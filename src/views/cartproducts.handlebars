@@ -13,4 +13,8 @@
 		</div>
 	{{/each}}
 	</div>
+	<form action="/api/carts/{{cid}}/purchase?_method=DELETE" method="post">
+		<input type="hidden" name="_method" value="DELETE">
+		<button type="submit">Hacer compra</button>
+	</form>
 <p>Fin de listado</p>

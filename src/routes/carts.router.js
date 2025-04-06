@@ -13,5 +13,6 @@ router.put('/:cid/products/:pid', cartController.putCartOneProduct);
 // Métodos DELETE para carritos
 router.delete('/:cid', cartController.emptyCartAll);
 router.delete('/:cid/products/:pid', cartController.emptyCartOne);
+router.delete('/:cid/purchase', cartController.checkoutCart);
 
 export default router;

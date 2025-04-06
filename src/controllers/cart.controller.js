@@ -1,6 +1,8 @@
 // Servicio de carrito y producto
 import cartService from '../services/cart.service.js';
 import productService from '../services/product.service.js';
+import ticketService from '../services/ticket.service.js';
+import {generateUniqueCode} from '../utils/utilsrand.js';
 
 class CartController {
 	async getCartById(req, res) {
@@ -127,6 +129,45 @@ class CartController {
 		} catch (error){
 			console.log(error)
 			return res.status(500).send({status: 'error', error: 'Error al borrar el producto del carrito.'});
+		}
+	}
+
+	async checkoutCart(req,res) {
+		console.log('Id del carrito a pagar:', req.params.cid);
+		const cid = req.params.cid;
+		try{
+			const foundCart = await cartService.getCartById(cid);
+			const unavailableProducts = []
+			const products = foundCart.products;
+			let total = 0
+			for (let index = 0; index < products.length; index++) {
+				const element = products[index];
+				const pid = element._id;
+				const quantity = element.quantity
+				const foundProduct = await productService.getProductById(pid);
+				if (quantity > foundProduct.stock) {
+					console.log(`No hay suficiente stock (${foundProduct.stock}) para el producto con Id ${pid} para la cantidad ${quantity}`);
+					unavailableProducts.push(element)
+				} else {
+					foundProduct.stock -= quantity;
+					total += foundProduct.price*quantity;
+					const resultProduct = await productService.editProduct(pid, foundProduct);
+				}
+			}
+			foundCart.products = unavailableProducts;
+			const result = await cartService.editCart(cid, foundCart);
+			if (total>0) {
+				ticketService.createTicket({
+					code: generateUniqueCode(),
+					purchasedate: String(new Date()),
+					purchaser: "AlanTuring@email.com", // hardcodeado dado que tuve problemas con jwt
+					total: total,
+				})
+			}
+			return res.send({status: "success", message: "Compra generada.", payload: result});
+		} catch (error){
+			console.log(error)
+			return res.status(500).send({status: 'error', error: 'Error al actualizar el carrito.'});
 		}
 	}
 }
